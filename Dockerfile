@@ -1,5 +1,7 @@
 FROM node:lts-alpine
 
+ARG production
+
 EXPOSE 8080
 
 LABEL maintainer="bafolts" \
@@ -19,9 +21,9 @@ RUN npm install
 
 COPY . .
 
-RUN chown -R tfm:tfm /usr/src/app \
-   && npm run build \
-   && rm -rf .git \
+RUN chown -R tfm:tfm /usr/src/app
+RUN if [[ -n "$production" ]] ; then npm run build:production ; else npm run build ; fi
+RUN rm -rf .git \
    && apk del git
 
 USER tfm

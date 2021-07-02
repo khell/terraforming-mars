@@ -39,6 +39,7 @@
     "chai": "^4.2.0",
     "compression-webpack-plugin": "^8.0.0",
     "css-loader": "^5.2.6",
+    "html-webpack-plugin": "^5.3.2",
     "jsdom": "^16.6.0",
     "jsdom-global": "^3.0.2",
     "less-loader": "^10.0.0",
@@ -57,7 +58,9 @@
   },
   "scripts": {
     "build": "npm run compile && npm run webpack && npm run lint",
+    "build:production": "npm run compile && npm run webpack:production && npm run lint",
     "prebuild": "npm run makeCss",
+    "prebuild:production": "npm run makeCss",
     "clean": "rm -r ./build/ ./src/genfiles/ || true",
     "compile": "tsc --build src/tsconfig.json",
     "precompile": "npm run makeJson",
@@ -74,7 +77,8 @@
     "test:components": "vti diagnostics && mochapack --require tests/components/setup.ts tests/components/*.spec.ts",
     "test:components:watch": "mochapack --watch --require tests/components/setup.ts tests/components/*.spec.ts",
     "watch": "webpack --watch --mode=development",
-    "webpack": "webpack"
+    "webpack": "webpack",
+    "webpack:production": "webpack --mode=production"
   },
   "repository": {
     "type": "git",
