@@ -90,8 +90,10 @@ export class ServeAsset extends Handler {
   }
 
   private toFile(urlPath: string, encodings: Set<Encoding>): { file?: string, encoding?: Encoding } {
-    switch (urlPath) {
-    case 'assets/index.html':
+    // Use path without chunk hash if it exists
+    const basePathCase = urlPath.replace(/^(main)\.(.+)(\.js)(\.[a-z]+)?(\.[a-z]+)?$/, '$1$3$4$5');
+    switch (basePathCase) {
+    case 'build/index.html':
     case 'assets/Prototype.ttf':
     case 'assets/futureforces.ttf':
       return {file: urlPath};

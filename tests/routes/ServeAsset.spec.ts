@@ -41,7 +41,7 @@ describe('ServeAsset', () => {
   });
 
   it('index.html', () => {
-    setRequest('/assets/index.html', [['accept-encoding', '']]);
+    setRequest('/build/index.html', [['accept-encoding', '']]);
     instance.get(req, res.hide(), ctx);
     expect(res.content.startsWith('<!DOCTYPE html>'));
   });

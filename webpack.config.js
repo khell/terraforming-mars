@@ -1,5 +1,6 @@
 const {VueLoaderPlugin} = require('vue-loader');
 const CompressionPlugin = require('compression-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const zlib = require('zlib');
 
 module.exports = {
@@ -44,8 +45,12 @@ module.exports = {
       filename: '[path][base].br',
       compressionOptions: {params: {[zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY}},
     }),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+    }),
   ],
   output: {
     path: __dirname + '/build',
+    filename: '[name].[contenthash].js',
   },
 };

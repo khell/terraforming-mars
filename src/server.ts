@@ -72,11 +72,14 @@ function processRequest(req: http.IncomingMessage, res: http.ServerResponse): vo
 
   const url = new URL(req.url, `http://${req.headers.host}`);
   const ctx = {url, route, serverId, gameLoader: GameLoader.getInstance()};
-  const handler: IHandler | undefined = handlers.get(url.pathname);
+
+  // Map bundle hash to actual underlying handler
+  const handlerName = url.pathname.replace(/^(\/main)\.(.+)(\.js)(\.[a-z]+)?(\.[a-z]+)?$/, '$1$3$4$5');
+  const handler: IHandler | undefined = handlers.get(handlerName);
 
   if (handler !== undefined) {
     handler.processRequest(req, res, ctx);
-  } else if (req.method === 'GET' && url.pathname.startsWith('/assets/')) {
+  } else if (req.method === 'GET' && handlerName.startsWith('/assets/')) {
     ServeAsset.INSTANCE.get(req, res, ctx);
   } else {
     route.notFound(req, res);

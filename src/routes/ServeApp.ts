@@ -9,7 +9,7 @@ export class ServeApp extends Handler {
     super();
   }
   public get(req: http.IncomingMessage, res: http.ServerResponse, ctx: IContext): void {
-    req.url = '/assets/index.html';
+    req.url = '/build/index.html';
     ServeAsset.INSTANCE.get(req, res, ctx);
   }
 }
